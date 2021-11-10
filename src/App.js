@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { HelmetProvider } from "react-helmet-async";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { darkTheme, GlobalStyles } from "./styles";
+import routes from "./routes";
+import Home from "./screens/Home";
+import NotFound from "./screens/NotFound";
+import { ThemeProvider } from "styled-components";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HelmetProvider>
+      <ThemeProvider theme={darkTheme}>
+        <GlobalStyles />
+        <BrowserRouter>
+          <Switch>
+            <Route path={routes.home} exact>
+              <Home />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 
