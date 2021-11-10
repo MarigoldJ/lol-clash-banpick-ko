@@ -5,6 +5,7 @@ import routes from "./routes";
 import Home from "./screens/Home";
 import NotFound from "./screens/NotFound";
 import { ThemeProvider } from "styled-components";
+import InfoLink from "./screens/InfoLInk";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
           <Switch>
             <Route path={routes.home} exact>
               <Home />
+            </Route>
+            <Route path={routes.infoLink} exact>
+              <InfoLink />
             </Route>
             <Route>
               <NotFound />
