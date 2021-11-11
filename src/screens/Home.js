@@ -64,7 +64,7 @@ const SubmitButton = styled.input`
   background-color: green;
 `;
 
-function Home({ history }) {
+function Home() {
   const {
     register,
     handleSubmit,
@@ -82,6 +82,7 @@ function Home({ history }) {
   const [redName, setRedName] = useState("");
 
   const onSubmitValid = (data) => {
+    console.log(data);
     const { blueName: givenBlue, redName: givenRed } = getValues();
     setBlueName(givenBlue);
     setRedName(givenRed);
@@ -90,7 +91,7 @@ function Home({ history }) {
 
   return (
     <Layout>
-      <form onChange={handleSubmit(onSubmitValid)}>
+      <form onSubmit={handleSubmit(onSubmitValid)}>
         <TeamContainer>
           <TeamSideContainer>
             <TeamSide teamColor={colors.blue}>블루 팀</TeamSide>
@@ -128,7 +129,7 @@ function Home({ history }) {
           </TeamNameContainer>
         </TeamContainer>
 
-        <Link to={{ pathname: routes.banpick, state: {} }}>
+        <Link to={{ pathname: routes.link, state: { blueName, redName } }}>
           <SubmitButton type="submit" value="밴픽 시작" />
         </Link>
       </form>

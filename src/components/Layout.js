@@ -13,7 +13,8 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  /* flex-direction: row; */
   justify-content: center;
   align-items: center;
   width: 50%;

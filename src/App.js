@@ -3,26 +3,25 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { darkTheme, GlobalStyles } from "./styles";
 import routes from "./routes";
 import Home from "./screens/Home";
+import TeamBan from "./screens/TeamBan";
 import NotFound from "./screens/NotFound";
 import { ThemeProvider } from "styled-components";
-import InfoLink from "./screens/InfoLInk";
+import LinkInfo from "./screens/LinkInfo";
 
 function App() {
+  //   const [blueName, setBlueName] = useState(null);
+  // const [redName, setRedName] = useState(null);
+
   return (
     <HelmetProvider>
       <ThemeProvider theme={darkTheme}>
         <GlobalStyles />
         <BrowserRouter>
           <Switch>
-            <Route path={routes.home} exact>
-              <Home />
-            </Route>
-            <Route path={routes.infoLink} exact>
-              <InfoLink />
-            </Route>
-            <Route>
-              <NotFound />
-            </Route>
+            <Route path={routes.home} component={Home} exact />
+            <Route path={routes.link} component={LinkInfo} exact />
+            <Route path={routes.banpick} component={TeamBan} />
+            <Route component={NotFound} />
           </Switch>
         </BrowserRouter>
       </ThemeProvider>
