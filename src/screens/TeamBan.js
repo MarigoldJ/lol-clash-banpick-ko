@@ -1,12 +1,33 @@
+import { useEffect } from "react";
+import { io } from "socket.io-client";
 import Layout from "../components/Layout";
-import { SERVER_URL } from "../routes";
+// import { SERVER_URL } from "../routes";
 
-function TeamBan({ location: { pathname, search } }) {
+const socket = io("http://localhost:38080/");
+
+function TeamBan({ location: { search } }) {
   // console.log(SERVER_URL + pathname + search);
-  fetch(SERVER_URL + pathname + search, { method: "get" })
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
-  return <Layout>Hi</Layout>;
+
+  console.log("hi");
+
+  const click = (e) => {
+    console.log("clicked!");
+    socket.emit("banpick", search);
+  };
+
+  useEffect(() => {
+    socket.on("response", (msg) => {
+      console.log(msg);
+    });
+  });
+
+  return (
+    <Layout>
+      <div>
+        <button onClick={() => click()}>연결해보기</button>
+      </div>
+    </Layout>
+  );
 }
 
 export default TeamBan;

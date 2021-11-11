@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../components/Layout";
 import routes from "../routes";
@@ -61,15 +60,18 @@ const SubmitButton = styled.input`
   font-weight: 600;
   color: black;
   width: 100%;
+  cursor: ${(props) => (props.disabled ? "unset" : "pointer")};
+
   background-color: green;
+  opacity: ${(props) => (props.disabled ? "0.4" : "1")};
 `;
 
 function Home() {
+  const history = useHistory();
   const {
     register,
     handleSubmit,
-    // formState: { errors, isValid },
-    getValues,
+    formState: { isValid },
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -78,15 +80,13 @@ function Home() {
     },
   });
 
-  const [blueName, setBlueName] = useState("");
-  const [redName, setRedName] = useState("");
-
   const onSubmitValid = (data) => {
-    console.log(data);
-    const { blueName: givenBlue, redName: givenRed } = getValues();
-    setBlueName(givenBlue);
-    setRedName(givenRed);
-    console.log(givenBlue, givenRed);
+    // console.log(data);
+    // console.log(isValid);
+    history.push(routes.link, {
+      blueName: data.blueName,
+      redName: data.redName,
+    });
   };
 
   return (
@@ -98,13 +98,7 @@ function Home() {
           </TeamSideContainer>
           <TeamNameContainer>
             <input
-              // {...register("blueName", {
-              //   maxLength: {
-              //     value: 8,
-              //     message: "Team name should be less than 9.",
-              //   },
-              // })}
-              {...register("blueName")}
+              {...register("blueName", { required: true })}
               type="text"
               placeholder=" 블루 팀명을 쓰세요."
             />
@@ -117,21 +111,14 @@ function Home() {
           </TeamSideContainer>
           <TeamNameContainer>
             <input
-              {...register("redName", {
-                maxLength: {
-                  value: 8,
-                  message: "Team name should be less than 9.",
-                },
-              })}
+              {...register("redName", { required: true })}
               type="text"
               placeholder=" 레드 팀명을 쓰세요."
             />
           </TeamNameContainer>
         </TeamContainer>
 
-        <Link to={{ pathname: routes.link, state: { blueName, redName } }}>
-          <SubmitButton type="submit" value="밴픽 시작" />
-        </Link>
+        <SubmitButton type="submit" value="밴픽 시작" disabled={!isValid} />
       </form>
     </Layout>
   );

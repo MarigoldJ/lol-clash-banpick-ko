@@ -47,7 +47,14 @@ const TeamLink = styled.span`
   font-size: 20px;
 `;
 
-function LinkInfo({ location: { pathname, search } }) {
+function LinkInfo({
+  location: { pathname, search },
+  history: {
+    location: {
+      state: { blueName, redName },
+    },
+  },
+}) {
   const [blueLink, setBlueLink] = useState("");
   const [redLink, setRedLink] = useState("");
   const [observerLink, setObserverLink] = useState("");
@@ -69,7 +76,7 @@ function LinkInfo({ location: { pathname, search } }) {
     fetch(SERVER_URL + pathname + search, {
       method: "post",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ blueName: "imblue", redName: "imred" }),
+      body: JSON.stringify({ blueName, redName }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -84,7 +91,7 @@ function LinkInfo({ location: { pathname, search } }) {
       .catch((err) => {
         console.log(err);
       });
-  }, [pathname, search]);
+  }, [pathname, search, blueName, redName]);
 
   return (
     <Layout>
