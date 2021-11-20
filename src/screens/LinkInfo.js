@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Layout from "../components/Layout";
-import { SERVER_URL } from "../routes";
+import { SERVER_URL } from "../server";
 import { colors } from "../styles";
 
 const TeamContainer = styled.div`

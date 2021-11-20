@@ -118,7 +118,7 @@ function Home() {
           </TeamNameContainer>
         </TeamContainer>
 
-        <SubmitButton type="submit" value="밴픽 시작" disabled={!isValid} />
+        <SubmitButton type="submit" value="밴픽 생성" disabled={!isValid} />
       </form>
     </Layout>
   );

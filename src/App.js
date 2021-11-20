@@ -21,6 +21,7 @@ function App() {
             <Route path={routes.home} component={Home} exact />
             <Route path={routes.link} component={LinkInfo} exact />
             <Route path={routes.banpick} component={TeamBan} />
+
             <Route component={NotFound} />
           </Switch>
         </BrowserRouter>
