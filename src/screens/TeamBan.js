@@ -206,7 +206,7 @@ function TeamBan({ location: { search } }) {
   useEffect(() => {
     if (!isChampLoaded) {
       const requestURL =
-        "http://ddragon.leagueoflegends.com/cdn/11.23.1/data/ko_KR/champion.json";
+        "https://ddragon.leagueoflegends.com/cdn/11.23.1/data/ko_KR/champion.json";
       const request = new XMLHttpRequest();
       request.open("GET", requestURL);
       request.responseType = "json";
