@@ -5,9 +5,12 @@ import { colors } from "../styles";
 import ImageWindow from "../components/ImageWindow";
 import { SERVER_URL } from "../server";
 
-import black from "../img/black.png";
+import blackBan from "../img/black_ban.png";
+import blackPick from "../img/black_pick.png";
 
 const initialPhase = {
+  isBlueReady: "false",
+  isRedReady: "false",
   phase: 1,
   startTime: Date.now(),
   blueName: "",
@@ -106,12 +109,16 @@ const PickContainer = styled.div`
   justify-content: ${(props) => (props.isBlue ? "flex-end" : "flex-start")};
 `;
 const BanWindow = styled(ImageWindow)`
-  width: 40px;
-  height: 40px;
+  /* width: 40px;
+  height: 40px; */
+  width: 10%;
+  height: auto;
 `;
 const PickWindow = styled(ImageWindow)`
-  width: 80px;
-  height: 150px;
+  /* width: 80px; */
+  /* height: 150px; */
+  width: 18%;
+  height: auto;
 `;
 
 // 3. Select Container
@@ -120,6 +127,8 @@ const SelectContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  /* height: 50%; */
+  /* background-color: white; */
 `;
 
 const SearchSelectContainer = styled.div`
@@ -136,6 +145,12 @@ const SearchBox = styled.input`
   padding: 5px;
   border: 1px solid gray;
   text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  ::placeholder {
+    font-size: 20px;
+    font-weight: 600;
+  }
 `;
 const SelectButton = styled.button`
   margin-left: 40px;
@@ -149,8 +164,10 @@ const SelectButton = styled.button`
 const ChampionContainer = styled.div`
   display: grid;
   grid-gap: 10px 20px;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   height: 50vh;
+  /* height: 50%; */
+  /* max-width: 100%; */
   overflow-y: scroll;
 `;
 const Champion = styled.div`
@@ -166,7 +183,9 @@ const ChampionImage = styled.img`
   /* cursor: ${(props) => (props.disabled ? "unset" : "pointer")}; */
   /* opacity: ${(props) => (props.disabled ? 0.3 : 1)}; */
 `;
-const ChampionName = styled.span``;
+const ChampionName = styled.span`
+  font-size: 12px;
+`;
 
 const socket = io(SERVER_URL);
 
@@ -187,8 +206,16 @@ function TeamBan({ location: { search } }) {
   const interval = useRef(null);
 
   const [banpick, setBanpick] = useState(initialPhase);
-
   const [keyword, setKeyword] = useState("");
+  const [isBlueReady, setIsBlueReady] = useState(
+    JSON.parse(initialPhase.isBlueReady)
+  );
+  const [isRedReady, setIsRedReady] = useState(
+    JSON.parse(initialPhase.isRedReady)
+  );
+  // const [isReady, setIsReady] = useState(
+  //   JSON.parse(initialPhase.isBlueReady) && JSON.parse(initialPhase.isRedReady)
+  // );
 
   useEffect(() => {
     socket.emit("gamecode", gameCode);
@@ -235,10 +262,13 @@ function TeamBan({ location: { search } }) {
     socket.on("banpickPhase", (banpickPhase) => {
       setBanpick(banpickPhase);
       setPhase(parseInt(banpickPhase.phase));
-      // console.log("banpick", getTimer(banpickPhase.startTime));
-      // console.log("now", Date.now());
-      // console.log("giv", banpickPhase.startTime);
       setTimer(getTimer(parseInt(banpickPhase.startTime)));
+      // setIsReady(
+      //   JSON.parse(banpickPhase.isBlueReady) &&
+      //     JSON.parse(banpickPhase.isRedReady)
+      // );
+      setIsBlueReady(JSON.parse(banpickPhase.isBlueReady));
+      setIsRedReady(JSON.parse(banpickPhase.isRedReady));
 
       [...Array(20).keys()].map((key) => {
         const currentChamp = banpickPhase[key + 1];
@@ -333,15 +363,20 @@ function TeamBan({ location: { search } }) {
         <TeamSideContainer style={{ justifyContent: "flex-start" }}>
           <TeamSide teamColor={colors.blue}>{banpick.blueName}</TeamSide>
         </TeamSideContainer>
-        <TimerContainer
-          isBlue={[1, 3, 5, 7, 10, 11, 14, 16, 18, 19].includes(phase)}
-        >
-          <Timer>:{timer}</Timer>
-        </TimerContainer>
+        {isBlueReady && isRedReady && phase <= 20 ? (
+          <TimerContainer
+            isBlue={[1, 3, 5, 7, 10, 11, 14, 16, 18, 19].includes(phase)}
+          >
+            <Timer>:{timer}</Timer>
+          </TimerContainer>
+        ) : null}
+
         <TeamSideContainer style={{ justifyContent: "flex-end" }}>
           <TeamSide teamColor={colors.red}>{banpick.redName}</TeamSide>
         </TeamSideContainer>
       </TeamContainer>
+
+      <div></div>
 
       <BanpickContainer>
         <BanpickSide isBlue={true}>
@@ -352,8 +387,10 @@ function TeamBan({ location: { search } }) {
                 id={id}
                 phase={phase}
                 src={makeImgUrl(id, banpick[id])}
-                onError={(data) => (data.target.src = black)}
+                onError={(data) => (data.target.src = blackBan)}
                 ref={(el) => (banpickRef.current[id] = el)}
+                isMyTurn={isMyTurn(side, phase)}
+                activationColor={colors.blue}
               />
             ))}
           </BanContainer>
@@ -364,8 +401,10 @@ function TeamBan({ location: { search } }) {
                 id={id}
                 phase={phase}
                 src={makeImgUrl(id, banpick[id])}
-                onError={(data) => (data.target.src = black)}
+                onError={(data) => (data.target.src = blackPick)}
                 ref={(el) => (banpickRef.current[id] = el)}
+                isMyTurn={isMyTurn(side, phase)}
+                activationColor={colors.blue}
               />
             ))}
           </PickContainer>
@@ -379,8 +418,10 @@ function TeamBan({ location: { search } }) {
                 id={id}
                 phase={phase}
                 src={makeImgUrl(id, banpick[id])}
-                onError={(data) => (data.target.src = black)}
+                onError={(data) => (data.target.src = blackBan)}
                 ref={(el) => (banpickRef.current[id] = el)}
+                isMyTurn={isMyTurn(side, phase)}
+                activationColor={colors.red}
               />
             ))}
           </BanContainer>
@@ -391,8 +432,10 @@ function TeamBan({ location: { search } }) {
                 id={id}
                 phase={phase}
                 src={makeImgUrl(id, banpick[id])}
-                onError={(data) => (data.target.src = black)}
+                onError={(data) => (data.target.src = blackPick)}
                 ref={(el) => (banpickRef.current[id] = el)}
+                isMyTurn={isMyTurn(side, phase)}
+                activationColor={colors.red}
               />
             ))}
           </PickContainer>
@@ -400,12 +443,53 @@ function TeamBan({ location: { search } }) {
       </BanpickContainer>
 
       <SelectContainer>
+        {isBlueReady && isRedReady ? null : side === "blue" ? (
+          isBlueReady ? (
+            <SearchSelectContainer style={{ justifyContent: "center" }}>
+              <span>상대편 기다리는중...</span>
+            </SearchSelectContainer>
+          ) : (
+            <SearchSelectContainer style={{ justifyContent: "center" }}>
+              <SelectButton
+                style={{ height: "30px", marginLeft: "0px" }}
+                onClick={() => {
+                  setIsBlueReady(true);
+                  socket.emit("ready", { gamecode: gameCode, team: side });
+                }}
+              >
+                밴픽 시작
+              </SelectButton>
+            </SearchSelectContainer>
+          )
+        ) : side === "red" ? (
+          isRedReady ? (
+            <SearchSelectContainer style={{ justifyContent: "center" }}>
+              <span>상대편 기다리는중...</span>
+            </SearchSelectContainer>
+          ) : (
+            <SearchSelectContainer style={{ justifyContent: "center" }}>
+              <SelectButton
+                style={{ height: "30px", marginLeft: "0px" }}
+                onClick={() => {
+                  setIsRedReady(true);
+                  socket.emit("ready", { gamecode: gameCode, team: side });
+                }}
+              >
+                밴픽 시작
+              </SelectButton>
+            </SearchSelectContainer>
+          )
+        ) : (
+          <SearchSelectContainer style={{ justifyContent: "center" }}>
+            <span>양측 팀 기다리는 중...</span>
+          </SearchSelectContainer>
+        )}
+
         <SearchSelectContainer>
           <SearchBox
             placeholder={"챔피언명 검색"}
             onChange={(data) => {
               setKeyword(data.target.value);
-              // console.log(champRef.current["Garen"]);
             }}
           />
           {isMyTurn(side, phase) ? (
@@ -413,7 +497,8 @@ function TeamBan({ location: { search } }) {
               disabled={!selectedChamp}
               onClick={() => clickButton()}
             >
-              선택 완료 {phase}
+              {/* 선택 완료 {phase} */}
+              선택 완료
             </SelectButton>
           ) : null}
         </SearchSelectContainer>

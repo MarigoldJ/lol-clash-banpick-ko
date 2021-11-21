@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 50%;
-  border: 1px solid white;
+  /* border: 1px solid white; */
 `;
 
 function Layout({ children }) {
