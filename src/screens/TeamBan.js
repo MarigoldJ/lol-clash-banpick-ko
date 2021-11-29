@@ -263,10 +263,6 @@ function TeamBan({ location: { search } }) {
       setBanpick(banpickPhase);
       setPhase(parseInt(banpickPhase.phase));
       setTimer(getTimer(parseInt(banpickPhase.startTime)));
-      // setIsReady(
-      //   JSON.parse(banpickPhase.isBlueReady) &&
-      //     JSON.parse(banpickPhase.isRedReady)
-      // );
       setIsBlueReady(JSON.parse(banpickPhase.isBlueReady));
       setIsRedReady(JSON.parse(banpickPhase.isRedReady));
 
@@ -357,6 +353,19 @@ function TeamBan({ location: { search } }) {
     }
   };
 
+  const isCurrentPhase = (selectedPhase) => {
+    // 입력된 phase가 현재 phase인지 확인
+    if (!isBlueReady || !isRedReady) {
+      return false;
+    } else {
+      if (selectedPhase === phase) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+
   return (
     <Container>
       <TeamContainer>
@@ -376,8 +385,6 @@ function TeamBan({ location: { search } }) {
         </TeamSideContainer>
       </TeamContainer>
 
-      <div></div>
-
       <BanpickContainer>
         <BanpickSide isBlue={true}>
           <BanContainer isBlue={true}>
@@ -389,7 +396,7 @@ function TeamBan({ location: { search } }) {
                 src={makeImgUrl(id, banpick[id])}
                 onError={(data) => (data.target.src = blackBan)}
                 ref={(el) => (banpickRef.current[id] = el)}
-                isMyTurn={isMyTurn(side, phase)}
+                isCurrentPhase={isCurrentPhase(id)}
                 activationColor={colors.blue}
               />
             ))}
@@ -403,7 +410,7 @@ function TeamBan({ location: { search } }) {
                 src={makeImgUrl(id, banpick[id])}
                 onError={(data) => (data.target.src = blackPick)}
                 ref={(el) => (banpickRef.current[id] = el)}
-                isMyTurn={isMyTurn(side, phase)}
+                isCurrentPhase={isCurrentPhase(id)}
                 activationColor={colors.blue}
               />
             ))}
@@ -420,7 +427,7 @@ function TeamBan({ location: { search } }) {
                 src={makeImgUrl(id, banpick[id])}
                 onError={(data) => (data.target.src = blackBan)}
                 ref={(el) => (banpickRef.current[id] = el)}
-                isMyTurn={isMyTurn(side, phase)}
+                isCurrentPhase={isCurrentPhase(id)}
                 activationColor={colors.red}
               />
             ))}
@@ -434,7 +441,7 @@ function TeamBan({ location: { search } }) {
                 src={makeImgUrl(id, banpick[id])}
                 onError={(data) => (data.target.src = blackPick)}
                 ref={(el) => (banpickRef.current[id] = el)}
-                isMyTurn={isMyTurn(side, phase)}
+                isCurrentPhase={isCurrentPhase(id)}
                 activationColor={colors.red}
               />
             ))}
@@ -497,7 +504,6 @@ function TeamBan({ location: { search } }) {
               disabled={!selectedChamp}
               onClick={() => clickButton()}
             >
-              {/* 선택 완료 {phase} */}
               선택 완료
             </SelectButton>
           ) : null}
