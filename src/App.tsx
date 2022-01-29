@@ -1,25 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import NotFound from "@screens/NotFound";
+import Home from "@screens/Home";
+import LinkInfo from "@screens/LinkInfo";
+import TeamBan from "@screens/TeamBan";
+import ROUTES from "@utils/routes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="*" element={<NotFound />} />
+      <Route path={ROUTES.home} element={<Home />} />
+      <Route path={ROUTES.link} element={<LinkInfo />} />
+      <Route path={ROUTES.banpick} element={<TeamBan />} />
+    </Routes>
   );
 }
 
