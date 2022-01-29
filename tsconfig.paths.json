@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@screens/*": ["src/screens/*"]
+      "@screens/*": ["src/screens/*"],
+      "@utils/*": ["src/utils/*"]
     }
   }
 }
