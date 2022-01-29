@@ -9,9 +9,6 @@ import { ThemeProvider } from "styled-components";
 import LinkInfo from "./screens/LinkInfo";
 
 function App() {
-  //   const [blueName, setBlueName] = useState(null);
-  // const [redName, setRedName] = useState(null);
-
   return (
     <HelmetProvider>
       <ThemeProvider theme={darkTheme}>
