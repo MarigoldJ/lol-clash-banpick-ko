@@ -3,6 +3,7 @@ import fonts from "@styles/fonts";
 import { ReactNode, useState } from "react";
 import styled from "styled-components";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { TailSpin } from "react-loader-spinner";
 
 type IProps = {
   children: ReactNode | null;
@@ -11,20 +12,25 @@ type IProps = {
 
 export default function LinkCopyBtnContainer({ children, link }: IProps) {
   const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   return (
     <Container>
       {children}
-      <CopyToClipboard
-        text={link}
-        onCopy={() => {
-          setIsCopied(true);
-        }}
-      >
-        <button className="link-copy-btn">
-          {isCopied ? "복사 완료" : "링크 복사"}
-        </button>
-      </CopyToClipboard>
+      {isLoaded ? (
+        <CopyToClipboard
+          text={link}
+          onCopy={() => {
+            setIsCopied(true);
+          }}
+        >
+          <button className="link-copy-btn">
+            {isCopied ? "복사 완료" : "링크 복사"}
+          </button>
+        </CopyToClipboard>
+      ) : (
+        <TailSpin color={"rgb(255,255,255)"} height={30} width={130} />
+      )}
     </Container>
   );
 }
