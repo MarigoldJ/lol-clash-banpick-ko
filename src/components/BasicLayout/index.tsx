@@ -1,9 +1,9 @@
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 import styled from "styled-components";
 
 type IProps = {
   bgImg: string;
-  children: ReactElement;
+  children: ReactNode;
 };
 
 export default function BasicLayout({ bgImg, children }: IProps) {
