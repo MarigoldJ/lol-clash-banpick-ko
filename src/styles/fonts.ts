@@ -44,6 +44,12 @@ const fonts = {
     line-height: 14px;
     letter-spacing: -0.01em;
   `,
+  Team: css`
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 38px;
+    letter-spacing: -0.01em;
+  `,
 };
 
 export default fonts;
