@@ -53,6 +53,6 @@ const BgOpacityBlack = styled.div`
   width: inherit;
   height: inherit;
 
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
 `;
