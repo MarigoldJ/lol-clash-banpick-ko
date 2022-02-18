@@ -14,16 +14,15 @@ export default function LinkCopyBtnContainer({ children, link }: IProps) {
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
+  const clickCopyBtn = () => {
+    setIsCopied(true);
+  };
+
   return (
     <Container>
       {children}
       {isLoaded ? (
-        <CopyToClipboard
-          text={link}
-          onCopy={() => {
-            setIsCopied(true);
-          }}
-        >
+        <CopyToClipboard text={link} onCopy={clickCopyBtn}>
           <button className="link-copy-btn">
             {isCopied ? "복사 완료" : "링크 복사"}
           </button>
