@@ -1,18 +1,19 @@
 import colors from "@styles/colors";
 import fonts from "@styles/fonts";
+import { ReactNode } from "react";
 import styled from "styled-components";
 
-type ISide = "blue" | "red";
+type IProps = {
+  side: "blue" | "red";
+  children: ReactNode;
+};
 
-export default function TeamSide({ side }: { side: ISide }) {
+export default function TeamSide({ side, children }: IProps) {
   const isBlue = side === "blue";
 
   const color = isBlue ? colors.blue : colors.red;
-  const sideName = isBlue ? "블루" : "레드";
 
-  return (
-    <TeamTextContainer teamColor={color}>{`${sideName} 팀`}</TeamTextContainer>
-  );
+  return <TeamTextContainer teamColor={color}>{children}</TeamTextContainer>;
 }
 
 // Style

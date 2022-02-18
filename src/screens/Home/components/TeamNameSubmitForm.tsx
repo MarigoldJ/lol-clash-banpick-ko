@@ -1,8 +1,9 @@
+import TeamSide from "@components/TeamSide";
 import colors from "@styles/colors";
 import fonts from "@styles/fonts";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { SubmitButton, TeamSide } from ".";
+import { SubmitButton } from ".";
 
 export default function TeamNameSubmitForm() {
   const {
@@ -23,7 +24,7 @@ export default function TeamNameSubmitForm() {
     <form onSubmit={submit}>
       <Container>
         <TeamSection>
-          <TeamSide side="blue" />
+          <TeamSide side="blue">블루 팀</TeamSide>
           <input
             className="teamform-input"
             {...register("blueName", { required: true })}
@@ -32,7 +33,7 @@ export default function TeamNameSubmitForm() {
           />
         </TeamSection>
         <TeamSection>
-          <TeamSide side="red" />
+          <TeamSide side="red">레드 팀</TeamSide>
           <input
             className="teamform-input"
             {...register("redName", { required: true })}
