@@ -4,14 +4,23 @@ import { ReactNode } from "react";
 import styled from "styled-components";
 
 type IProps = {
-  side: "blue" | "red";
+  side: "blue" | "red" | "none";
   children: ReactNode;
 };
 
 export default function TeamSide({ side, children }: IProps) {
-  const isBlue = side === "blue";
-
-  const color = isBlue ? colors.blue : colors.red;
+  let color = "none";
+  switch (side) {
+    case "blue":
+      color = colors.blue;
+      break;
+    case "red":
+      color = colors.red;
+      break;
+    default:
+      color = "rgb(200,200,200)";
+      break;
+  }
 
   return <TeamTextContainer teamColor={color}>{children}</TeamTextContainer>;
 }
