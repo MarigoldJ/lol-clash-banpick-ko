@@ -1,14 +1,15 @@
 import styled from "styled-components";
-import { TeamForm } from "@components/Team";
+import { mainBgImg } from "@assets/image";
+import { TeamNameSubmitForm } from "./components";
 
 function Home() {
   return (
-    <Container>
+    <Container bgImg={mainBgImg}>
       <div className="home-main">
-        <h1>Home</h1>
-        <h1>Home</h1>
-        <TeamForm teamColor={"blue"} />
-        <TeamForm teamColor={"red"} />
+        <BgOpacityBlack />
+        <div className="home-contents">
+          <TeamNameSubmitForm />
+        </div>
       </div>
     </Container>
   );
@@ -17,20 +18,41 @@ function Home() {
 export default Home;
 
 // Style
-const Container = styled.div`
+const Container = styled.div<{ bgImg: string }>`
+  position: relative;
+
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url(${(props) => props.bgImg});
+  background-size: cover;
+  background-position: center;
+
   .home-main {
-    position: absolute;
-    left: 25%;
-    top: 25%;
+    width: 70%;
+    height: 70%;
+    max-height: 50vh;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    width: 50%;
-    height: 50%;
-
-    width: 50%;
   }
+  .home-contents {
+    z-index: 3;
+  }
+`;
+
+const BgOpacityBlack = styled.div`
+  position: absolute;
+
+  width: inherit;
+  height: inherit;
+
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
 `;
