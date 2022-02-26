@@ -1,3 +1,4 @@
+import LoadVersion from "@hooks/LoadVersion";
 import { ImageList, ImageListItem, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -10,13 +11,15 @@ function TeamBan() {
     setChampName(event.target.value);
   };
 
+  const gameVersion = LoadVersion();
+
   // TODO: 이후 제거할 코드. 디버깅용.
+  console.log("게임버전 :", gameVersion);
   console.log(champList);
 
   useEffect(() => {
-    if (champList.length === 0) {
-      const requestURL =
-        "https://ddragon.leagueoflegends.com/cdn/11.23.1/data/ko_KR/champion.json";
+    if (champList.length === 0 && gameVersion !== "") {
+      const requestURL = `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/ko_KR/champion.json`;
       const request = new XMLHttpRequest();
       request.open("GET", requestURL);
       request.responseType = "json";
@@ -40,7 +43,7 @@ function TeamBan() {
         setChampLIst(chlist);
       };
     }
-  }, [champList]);
+  }, [champList, gameVersion]);
   return (
     <div>
       <Content
@@ -56,6 +59,7 @@ function TeamBan() {
           </ImageListItem>
         ))}
       </ImageList>
+      <Sample>{gameVersion}</Sample>
     </div>
   );
 }
@@ -88,4 +92,8 @@ const Content = styled(TextField)`
       color: white;
     }
   }
+`;
+
+const Sample = styled.div`
+  color: white;
 `;
