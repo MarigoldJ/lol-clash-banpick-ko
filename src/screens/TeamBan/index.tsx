@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { ChampCell } from "./components";
 
 function TeamBan() {
-  // const [champList, setChampLIst] = useState<Array<Object>>([]);
   const [champName, setChampName] = useState<string>("");
   const handleChampName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChampName(event.target.value);
@@ -14,10 +13,6 @@ function TeamBan() {
 
   const gameVersion = LoadVersion();
   const champList = LoadChampList({ gameVersion: gameVersion });
-
-  // TODO: 이후 제거할 코드. 디버깅용.
-  console.log("게임버전 :", gameVersion);
-  console.log(champList);
 
   return (
     <div>
@@ -34,7 +29,6 @@ function TeamBan() {
           </ImageListItem>
         ))}
       </ImageList>
-      <Sample>{gameVersion}</Sample>
     </div>
   );
 }
@@ -67,8 +61,4 @@ const Content = styled(TextField)`
       color: white;
     }
   }
-`;
-
-const Sample = styled.div`
-  color: white;
 `;
