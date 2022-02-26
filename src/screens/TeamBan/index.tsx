@@ -1,6 +1,7 @@
-import { TextField } from "@mui/material";
+import { ImageList, ImageListItem, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { ChampCell } from "./components";
 
 function TeamBan() {
   const [champList, setChampLIst] = useState<Array<Object>>([]);
@@ -48,6 +49,18 @@ function TeamBan() {
         value={champName}
         onChange={handleChampName}
       />
+      <ImageList
+        cols={7}
+        sx={{ width: 1000, height: 800 }}
+        // rowHeight={80}
+        gap={10}
+      >
+        {champList.map((champ: any) => (
+          <ImageListItem key={`champ_${champ.id}`}>
+            <ChampCell clickable={true} champ={champ} />
+          </ImageListItem>
+        ))}
+      </ImageList>
     </div>
   );
 }
