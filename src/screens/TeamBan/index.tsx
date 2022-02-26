@@ -49,12 +49,7 @@ function TeamBan() {
         value={champName}
         onChange={handleChampName}
       />
-      <ImageList
-        cols={7}
-        sx={{ width: 1000, height: 800 }}
-        // rowHeight={80}
-        gap={10}
-      >
+      <ImageList cols={6} sx={{ width: 750, height: 800, gap: 5 }}>
         {champList.map((champ: any) => (
           <ImageListItem key={`champ_${champ.id}`}>
             <ChampCell clickable={true} champ={champ} />
