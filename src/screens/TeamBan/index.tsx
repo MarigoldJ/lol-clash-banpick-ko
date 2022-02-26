@@ -1,49 +1,24 @@
+import LoadChampList from "@hooks/LoadChampList";
 import LoadVersion from "@hooks/LoadVersion";
 import { ImageList, ImageListItem, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ChampCell } from "./components";
 
 function TeamBan() {
-  const [champList, setChampLIst] = useState<Array<Object>>([]);
+  // const [champList, setChampLIst] = useState<Array<Object>>([]);
   const [champName, setChampName] = useState<string>("");
   const handleChampName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChampName(event.target.value);
   };
 
   const gameVersion = LoadVersion();
+  const champList = LoadChampList({ gameVersion: gameVersion });
 
   // TODO: 이후 제거할 코드. 디버깅용.
   console.log("게임버전 :", gameVersion);
   console.log(champList);
 
-  useEffect(() => {
-    if (champList.length === 0 && gameVersion !== "") {
-      const requestURL = `https://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/ko_KR/champion.json`;
-      const request = new XMLHttpRequest();
-      request.open("GET", requestURL);
-      request.responseType = "json";
-      request.send();
-
-      request.onload = () => {
-        console.log("Champion loaded!");
-        const { data }: { data: Array<Object> } = request.response;
-        const chlist: Array<Object> = Object.values(data).sort(
-          (a: any, b: any) => {
-            if (a.name < b.name) {
-              return -1;
-            } else if (a.name > b.name) {
-              return 1;
-            } else {
-              return 0;
-            }
-          }
-        );
-
-        setChampLIst(chlist);
-      };
-    }
-  }, [champList, gameVersion]);
   return (
     <div>
       <Content
