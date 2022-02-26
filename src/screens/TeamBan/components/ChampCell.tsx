@@ -1,4 +1,3 @@
-import { ImageListItemBar } from "@mui/material";
 import { getLOLImgUrl } from "@utils/general";
 import { ChampData } from "@utils/type";
 import styled, { css } from "styled-components";
