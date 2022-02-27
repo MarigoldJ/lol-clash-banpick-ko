@@ -3,7 +3,7 @@ import LoadVersion from "@hooks/LoadVersion";
 import { ImageList, ImageListItem, TextField } from "@mui/material";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { ChampCell } from "./components";
+import { ChampCell, PositionIcon } from "./components";
 
 const WIDTH = 1400;
 const WIDTH_MIDDLE = 790;
@@ -29,19 +29,28 @@ function TeamBan() {
         <div className="teamban-body">
           <div className="teamban-body-side"></div>
           <div className="teamban-body-center">
-            <Content
-              id="champion-search-box"
-              label="챔피언 명"
-              value={champName}
-              onChange={handleChampName}
-            />
-            <ImageList cols={6} sx={{ width: 750, height: 800, gap: 5 }}>
+            <div className="search">
+              <div className="search-positions">
+                <PositionIcon position="TOP" selected={false} />
+                <PositionIcon position="JUNGLE" selected={false} />
+                <PositionIcon position="MIDDLE" selected={false} />
+                <PositionIcon position="ADC" selected={true} />
+                <PositionIcon position="SUPPORT" selected={false} />
+              </div>
+              <ChampSearchBox
+                id="champion-search-box"
+                label="챔피언 명"
+                value={champName}
+                onChange={handleChampName}
+              />
+            </div>
+            <ChampListContainer cols={6}>
               {champList.map((champ: any) => (
                 <ImageListItem key={`champ_${champ.id}`}>
                   <ChampCell clickable={true} champ={champ} />
                 </ImageListItem>
               ))}
-            </ImageList>
+            </ChampListContainer>
           </div>
           <div className="teamban-body-side"></div>
         </div>
@@ -77,7 +86,7 @@ const Container = styled.div`
   }
   .teamban-body {
     width: 100%;
-    height: 800px
+    height: 800px;
 
     display: flex;
     justify-content: space-between;
@@ -93,9 +102,23 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
+  .search {
+    width: 750px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .search-positions {
+    img {
+      margin: 0px 5px;
+    }
+  }
 `;
 
-const Content = styled(TextField)`
+const ChampSearchBox = styled(TextField)`
   & label.Mui-focused {
     color: white;
   }
@@ -120,5 +143,19 @@ const Content = styled(TextField)`
     & input {
       color: white;
     }
+  }
+`;
+
+const ChampListContainer = styled(ImageList)`
+  margin: 20px 0px;
+  width: 750px;
+  height: 600px;
+  gap: 5px;
+
+  ::-webkit-scrollbar {
+    width: 0.4em;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
   }
 `;
