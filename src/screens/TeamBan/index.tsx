@@ -1,3 +1,4 @@
+import TeamSide from "@components/TeamSide";
 import LoadChampList from "@hooks/LoadChampList";
 import LoadVersion from "@hooks/LoadVersion";
 import { ImageList, ImageListItem, TextField } from "@mui/material";
@@ -18,13 +19,19 @@ function TeamBan() {
   const gameVersion = LoadVersion();
   const champList = LoadChampList({ gameVersion: gameVersion });
 
+  // TODO: teamName을 서버에서 불러오기
+  const teamName = {
+    blueName: "블루팀명",
+    redName: "레드팀명",
+  };
+
   return (
     <Container>
       <div className="teamban-main">
         <div className="teamban-header">
-          <div>블루팀</div>
+          <TeamSide side="blue">{teamName.blueName}</TeamSide>
           <div>:26</div>
-          <div>레드팀</div>
+          <TeamSide side="red">{teamName.redName}</TeamSide>
         </div>
         <div className="teamban-body">
           <div className="teamban-body-side">
