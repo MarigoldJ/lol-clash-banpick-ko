@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { ChampCell } from "./components";
 
 const WIDTH = 1400;
+const WIDTH_MIDDLE = 790;
+const WIDTH_BODY_SIDE = (WIDTH - WIDTH_MIDDLE) / 2;
 
 function TeamBan() {
   const [champName, setChampName] = useState<string>("");
@@ -72,6 +74,24 @@ const Container = styled.div`
     align-items: center;
 
     color: white;
+  }
+  .teamban-body {
+    width: 100%;
+    height: 800px
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .teamban-body-side {
+    width: ${WIDTH_BODY_SIDE}px;
+  }
+  .teamban-body-center {
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
