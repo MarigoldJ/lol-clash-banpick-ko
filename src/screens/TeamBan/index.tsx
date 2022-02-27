@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ChampCell } from "./components";
 
+const WIDTH = 1400;
+
 function TeamBan() {
   const [champName, setChampName] = useState<string>("");
   const handleChampName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,25 +17,50 @@ function TeamBan() {
   const champList = LoadChampList({ gameVersion: gameVersion });
 
   return (
-    <div>
-      <Content
-        id="champion-search-box"
-        label="챔피언 명"
-        value={champName}
-        onChange={handleChampName}
-      />
-      <ImageList cols={6} sx={{ width: 750, height: 800, gap: 5 }}>
-        {champList.map((champ: any) => (
-          <ImageListItem key={`champ_${champ.id}`}>
-            <ChampCell clickable={true} champ={champ} />
-          </ImageListItem>
-        ))}
-      </ImageList>
-    </div>
+    <Container>
+      <div className="teamban-main">
+        <div className="teamban-header">
+          <div>블루팀</div>
+          <div>:26</div>
+          <div>레드팀</div>
+        </div>
+        <div className="teamban-body">
+          <div className="teamban-body-side"></div>
+          <div className="teamban-body-center">
+            <Content
+              id="champion-search-box"
+              label="챔피언 명"
+              value={champName}
+              onChange={handleChampName}
+            />
+            <ImageList cols={6} sx={{ width: 750, height: 800, gap: 5 }}>
+              {champList.map((champ: any) => (
+                <ImageListItem key={`champ_${champ.id}`}>
+                  <ChampCell clickable={true} champ={champ} />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </div>
+          <div className="teamban-body-side"></div>
+        </div>
+      </div>
+    </Container>
   );
 }
 
 export default TeamBan;
+
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+
+  .teamban-main {
+    width: ${WIDTH}px;
+  }
+`;
 
 const Content = styled(TextField)`
   & label.Mui-focused {
