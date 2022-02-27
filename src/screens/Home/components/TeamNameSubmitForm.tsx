@@ -1,7 +1,10 @@
 import TeamSide from "@components/TeamSide";
 import colors from "@styles/colors";
 import fonts from "@styles/fonts";
+import routes from "@utils/routes";
+import getServerUrl from "@utils/server";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { SubmitButton } from ".";
 
@@ -15,9 +18,28 @@ export default function TeamNameSubmitForm() {
     defaultValues: { blueName: "", redName: "" },
   });
 
-  const submit = handleSubmit((data) => {
-    console.log(data);
-    // TODO: 버튼 눌렀을 때 링크 생성 페이지로 넘어가도록 하기.
+  const navigate = useNavigate();
+  const submit = handleSubmit((teamNames) => {
+    // 버튼 눌렀을 때
+    // 서버에 gamecode 생성 요청.
+    fetch(getServerUrl("create-link"), {
+      method: "post",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(teamNames),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          // 데이터를 수신하면 링크 확인 페이지로 넘어감.
+          console.log("Success for create Banpick Link!");
+          navigate(routes.link, { state: data });
+        } else {
+          console.log("Server did not give data.");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   return (
