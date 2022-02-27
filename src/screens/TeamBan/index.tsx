@@ -60,6 +60,19 @@ const Container = styled.div`
   .teamban-main {
     width: ${WIDTH}px;
   }
+  .teamban-header {
+    padding: 10px 30px;
+
+    width: 100%;
+    height: 80px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    color: white;
+  }
 `;
 
 const Content = styled(TextField)`
