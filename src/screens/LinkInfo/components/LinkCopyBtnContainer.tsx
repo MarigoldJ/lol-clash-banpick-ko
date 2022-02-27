@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import styled from "styled-components";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { TailSpin } from "react-loader-spinner";
+import { Tooltip } from "@mui/material";
 
 type IProps = {
   children: ReactNode | null;
@@ -11,21 +12,28 @@ type IProps = {
 };
 
 export default function LinkCopyBtnContainer({ children, link }: IProps) {
-  const [isCopied, setIsCopied] = useState<boolean>(false);
   const isLoaded = link !== "";
-
-  const clickCopyBtn = () => {
-    setIsCopied(true);
-  };
+  const [showTooltip, setShowTooltip] = useState(false);
 
   return (
     <Container>
       {children}
       {isLoaded ? (
-        <CopyToClipboard text={link} onCopy={clickCopyBtn}>
-          <button className="link-copy-btn">
-            {isCopied ? "복사 완료" : "링크 복사"}
-          </button>
+        <CopyToClipboard text={link}>
+          <Tooltip
+            title="복사 완료!"
+            leaveDelay={1500}
+            placement="right"
+            open={showTooltip}
+            onClick={() => {
+              setShowTooltip(true);
+            }}
+            onClose={() => {
+              setShowTooltip(false);
+            }}
+          >
+            <button className="link-copy-btn">링크 복사</button>
+          </Tooltip>
         </CopyToClipboard>
       ) : (
         <TailSpin color={"rgb(255,255,255)"} height={30} width={130} />
