@@ -28,6 +28,7 @@ function TeamBan() {
         </div>
         <div className="teamban-body">
           <div className="teamban-body-side"></div>
+
           <div className="teamban-body-center">
             <div className="search">
               <div className="search-positions">
@@ -51,7 +52,9 @@ function TeamBan() {
                 </ImageListItem>
               ))}
             </ChampListContainer>
+            <div className="buttons"></div>
           </div>
+
           <div className="teamban-body-side"></div>
         </div>
       </div>
@@ -115,6 +118,10 @@ const Container = styled.div`
     img {
       margin: 0px 5px;
     }
+  }
+  .buttons {
+    padding: 10px;
+    height: 104px;
   }
 `;
 
