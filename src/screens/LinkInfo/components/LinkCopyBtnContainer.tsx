@@ -12,9 +12,7 @@ type IProps = {
 
 export default function LinkCopyBtnContainer({ children, link }: IProps) {
   const [isCopied, setIsCopied] = useState<boolean>(false);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
-  // TODO: isLoaded 상태 수정하는 알고리즘 추가
+  const isLoaded = link !== "";
 
   const clickCopyBtn = () => {
     setIsCopied(true);
