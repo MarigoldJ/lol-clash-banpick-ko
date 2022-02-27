@@ -27,7 +27,22 @@ function TeamBan() {
           <div>레드팀</div>
         </div>
         <div className="teamban-body">
-          <div className="teamban-body-side"></div>
+          <div className="teamban-body-side">
+            <div className="champ-picked">
+              <ChampPicked />
+              <ChampPicked />
+              <ChampPicked />
+              <ChampPicked />
+              <ChampPicked />
+            </div>
+            <div className="champ-banned">
+              <ChampBanned />
+              <ChampBanned />
+              <ChampBanned />
+              <ChampBanned />
+              <ChampBanned />
+            </div>
+          </div>
 
           <div className="teamban-body-center">
             <div className="search">
@@ -55,7 +70,22 @@ function TeamBan() {
             <div className="buttons"></div>
           </div>
 
-          <div className="teamban-body-side"></div>
+          <div className="teamban-body-side">
+            <div className="champ-picked">
+              <ChampPicked />
+              <ChampPicked />
+              <ChampPicked />
+              <ChampPicked />
+              <ChampPicked />
+            </div>
+            <div className="champ-banned">
+              <ChampBanned />
+              <ChampBanned />
+              <ChampBanned />
+              <ChampBanned />
+              <ChampBanned />
+            </div>
+          </div>
         </div>
       </div>
     </Container>
@@ -71,6 +101,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
 
+  /* Layout */
   .teamban-main {
     width: ${WIDTH}px;
   }
@@ -106,6 +137,7 @@ const Container = styled.div`
     align-items: center;
   }
 
+  /* Center */
   .search {
     width: 750px;
 
@@ -122,6 +154,18 @@ const Container = styled.div`
   .buttons {
     padding: 10px;
     height: 104px;
+  }
+
+  /* Side */
+  .champ-picked {
+    width: ${WIDTH_BODY_SIDE}px;
+  }
+  .champ-banned {
+    width: ${WIDTH_BODY_SIDE}px;
+    height: ${WIDTH_BODY_SIDE / 5}px;
+
+    display: flex;
+    flex-direction: row;
   }
 `;
 
@@ -165,4 +209,15 @@ const ChampListContainer = styled(ImageList)`
   ::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.3);
   }
+`;
+
+const ChampPicked = styled.div`
+  height: 147px;
+  background-color: rgb(20, 20, 20);
+  border: 1px solid grey;
+`;
+const ChampBanned = styled.div`
+  width: 25%;
+  background-color: rgb(20, 20, 20);
+  border: 1px solid grey;
 `;
