@@ -1,4 +1,4 @@
-import { ChampData, ClientBanpickData } from "@utils/type";
+import { ChampData, ClientBanpickData, ServerBanpickData } from "@utils/type";
 
 type IProps = {
   type: "splash" | "loading" | "square";
@@ -26,6 +26,21 @@ export function getParamFromQueryStr(queryStr: string, param: string) {
   // URL 링크 뒤에 붙는 Query에서 특정 param의 값 얻어오는 함수
   const tempURL = new URL("https://test.com/test" + queryStr);
   return tempURL.searchParams.get(param);
+}
+
+export function parseBanpickData(
+  rawBanpickInfo: ServerBanpickData
+): ClientBanpickData {
+  // 서버에서 받아온 BanpickData는 모두 string형식이므로
+  // 이를 number나 boolean으로 변경해주는 함수
+  const newInfo: ClientBanpickData = {
+    ...rawBanpickInfo,
+    isBlueReady: JSON.parse(rawBanpickInfo.isBlueReady),
+    isRedReady: JSON.parse(rawBanpickInfo.isRedReady),
+    phase: parseInt(rawBanpickInfo.phase),
+    startTime: parseInt(rawBanpickInfo.startTime),
+  };
+  return newInfo;
 }
 
 export const fakeBanpickInfo: ClientBanpickData = {

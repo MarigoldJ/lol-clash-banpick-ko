@@ -1,4 +1,8 @@
-import { fakeBanpickInfo, getParamFromQueryStr } from "@utils/general";
+import {
+  fakeBanpickInfo,
+  getParamFromQueryStr,
+  parseBanpickData,
+} from "@utils/general";
 import getServerUrl from "@utils/server";
 import { ChampData } from "@utils/type";
 import { useEffect, useReducer, useState } from "react";
@@ -72,6 +76,25 @@ function TeamBan() {
     socket.emit("gamecode", gameCode);
     console.log("서버 로그인 완료.");
   }, [gameCode]);
+
+  // 서버와 통신 : 서버에서 오는 메시지 기다리기
+  useEffect(() => {
+    // banpickInfo 받아오기
+    socket.on("banpickPhase", (rawBanpickInfo) => {
+      // 받은 데이터 parsing
+      const newBanpickInfo = parseBanpickData(rawBanpickInfo);
+      if (newBanpickInfo) {
+        console.log("서버에서 밴픽정보 불러오기 완료!", newBanpickInfo.phase);
+        banpickInfoDispatch({ type: "update", newBanpickInfo });
+      }
+    });
+
+    // 다른 client에서 챔피언 select하는 정보 받아오기
+    socket.on("selectBroad", (selectData) => {
+      console.log("selectBroad 수신!!", selectData);
+      banpickInfoDispatch({ type: "select", select: selectData });
+    });
+  }, []);
 
   // 밴픽 현황 정보
   const [banpickInfo, banpickInfoDispatch] = useReducer(
