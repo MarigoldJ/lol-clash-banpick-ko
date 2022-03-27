@@ -1,14 +1,15 @@
 import { fakeBanpickInfo } from "@utils/general";
-import { ChampData, ClientBanpickData } from "@utils/type";
-import { useEffect, useState } from "react";
+import { ChampData } from "@utils/type";
+import { useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import PickBanHeader from "./components/PickBanHeader";
 import PickBanLayout from "./components/PickBanLayout";
 import SelectUI from "./components/SelectUI";
 import GameContext from "./contexts/GameContext";
+import { banpickInfoReducer } from "./reducers/banpickInfoReducer";
 
 function TeamBan() {
-  //   게임 기본 데이터(버전, 챔피언 리스트) 불러오기
+  // 게임 기본 데이터(버전, 챔피언 리스트) 불러오기
   const [gameVersion, setGameVersion] = useState("");
   const [champList, setChampList] = useState<Array<ChampData>>([]);
   useEffect(() => {
@@ -54,8 +55,11 @@ function TeamBan() {
     }
   }, [gameVersion]);
 
-  // TODO: 서버에서 받아온 BanpickInfo로 대체할 것
-  const banpickInfo: ClientBanpickData = fakeBanpickInfo;
+  // 밴픽 현황 정보
+  const [banpickInfo, banpickInfoDispatch] = useReducer(
+    banpickInfoReducer,
+    fakeBanpickInfo
+  );
 
   return (
     <GameContext.Provider value={{ banpickInfo, champList }}>
