@@ -1,7 +1,8 @@
-import { fakeBanpickInfo } from "@utils/general";
+import { fakeBanpickInfo, getParamFromQueryStr } from "@utils/general";
 import getServerUrl from "@utils/server";
 import { ChampData } from "@utils/type";
 import { useEffect, useReducer, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { io } from "socket.io-client";
 import styled from "styled-components";
 import PickBanHeader from "./components/PickBanHeader";
@@ -61,7 +62,16 @@ function TeamBan() {
     }
   }, [gameVersion]);
 
+  // 서버와 연결
   const [sock, sockDispatch] = useReducer(socketReducer, socket);
+
+  // 서버와 통신 : gameCode를 이용해서 banpickInfo 불러오기 (1회)
+  const { search } = useLocation();
+  const gameCode = getParamFromQueryStr(search, "game");
+  useEffect(() => {
+    socket.emit("gamecode", gameCode);
+    console.log("서버 로그인 완료.");
+  }, [gameCode]);
 
   // 밴픽 현황 정보
   const [banpickInfo, banpickInfoDispatch] = useReducer(

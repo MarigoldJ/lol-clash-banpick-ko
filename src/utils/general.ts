@@ -22,6 +22,12 @@ export function getLOLImgUrl({ type, champ }: IProps) {
   return "";
 }
 
+export function getParamFromQueryStr(queryStr: string, param: string) {
+  // URL 링크 뒤에 붙는 Query에서 특정 param의 값 얻어오는 함수
+  const tempURL = new URL("https://test.com/test" + queryStr);
+  return tempURL.searchParams.get(param);
+}
+
 export const fakeBanpickInfo: ClientBanpickData = {
   isBlueReady: false,
   isRedReady: false,
