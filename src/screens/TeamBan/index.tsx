@@ -103,7 +103,11 @@ function TeamBan() {
 
   return (
     <GameContext.Provider
-      value={{ banpickData: { banpickInfo, banpickInfoDispatch }, champList }}
+      value={{
+        banpickData: { banpickInfo, banpickInfoDispatch },
+        champList,
+        sockDispatch,
+      }}
     >
       <Container>
         <PickBanHeader

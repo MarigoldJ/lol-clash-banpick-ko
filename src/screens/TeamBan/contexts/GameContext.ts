@@ -2,6 +2,7 @@ import { fakeBanpickInfo } from "@utils/general";
 import { ChampData, ClientBanpickData } from "@utils/type";
 import { createContext, Dispatch } from "react";
 import { banpickInfoAction } from "../reducers/banpickInfoReducer";
+import { socketAction } from "../reducers/socketReducer";
 
 type GameContextProps = {
   banpickData: {
@@ -10,6 +11,8 @@ type GameContextProps = {
   };
 
   champList: Array<ChampData>;
+
+  sockDispatch: Dispatch<socketAction>;
 };
 
 const GameContext = createContext<GameContextProps>({
@@ -18,6 +21,7 @@ const GameContext = createContext<GameContextProps>({
     banpickInfoDispatch: (value: banpickInfoAction) => {},
   },
   champList: [],
+  sockDispatch: (value: socketAction) => {},
 });
 
 export default GameContext;
