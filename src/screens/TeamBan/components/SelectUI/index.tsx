@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import ChampListContainer from "./ChampListContainer";
 import PositionIcon from "./PositionIcon";
+import SelectBtn from "./SelectBtn";
 
 function SelectUI() {
   const [searchName, setSearchName] = useState<string>("");
@@ -32,7 +33,9 @@ function SelectUI() {
       <div className="ui-champlist">
         <ChampListContainer />
       </div>
-      <div className="ui-button"></div>
+      <div className="ui-button">
+        <SelectBtn />
+      </div>
     </Container>
   );
 }
@@ -58,6 +61,13 @@ const Container = styled.div`
   div.ui-champlist {
     margin-top: 30px;
     width: 100%;
+  }
+  div.ui-button {
+    margin-top: 30px;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
   }
 `;
 const ChampSearchBox = styled(TextField)`
