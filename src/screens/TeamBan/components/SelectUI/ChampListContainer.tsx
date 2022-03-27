@@ -6,11 +6,24 @@ import styled from "styled-components";
 import ChampCell from "./ChampCell";
 
 function ChampListContainer() {
-  const { champList } = useContext(GameContext);
+  const {
+    banpickData: {
+      banpickInfo: { phase },
+      banpickInfoDispatch,
+    },
+    selectData: { selectChamp },
+    champList,
+  } = useContext(GameContext);
 
   const clickChamp = (champId: string | undefined) => {
     // 선택한 챔피언 밴픽 window에 띄우기
+    selectChamp(champId);
+
     // banpickInfo 수정하기
+    banpickInfoDispatch({
+      type: "select",
+      select: { phase, champion: champId },
+    });
   };
 
   return (
