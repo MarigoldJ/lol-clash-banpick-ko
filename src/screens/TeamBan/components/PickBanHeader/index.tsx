@@ -1,5 +1,6 @@
 import TeamSide from "@components/TeamSide";
 import styled from "styled-components";
+import Timer from "./Timer";
 
 type IProps = {
   blueName: string;
@@ -10,7 +11,7 @@ function PickBanHeader({ blueName, redName }: IProps) {
   return (
     <Container>
       <TeamSide side="blue">{blueName}</TeamSide>
-      <div className="timer">:00</div>
+      <Timer startTime={26} />
       <TeamSide side="red">{redName}</TeamSide>
     </Container>
   );
