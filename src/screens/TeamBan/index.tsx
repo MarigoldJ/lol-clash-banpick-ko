@@ -73,14 +73,13 @@ function TeamBan() {
   const { search } = useLocation();
   const gameCode = getParamFromQueryStr(search, "game");
   useEffect(() => {
-    socket.emit("gamecode", gameCode);
-    console.log("서버 로그인 완료.");
+    sockDispatch({ type: "gamecode", payload: gameCode });
   }, [gameCode]);
 
   // 서버와 통신 : 서버에서 오는 메시지 기다리기
   useEffect(() => {
     // banpickInfo 받아오기
-    socket.on("banpickPhase", (rawBanpickInfo) => {
+    sock.on("banpickPhase", (rawBanpickInfo) => {
       // 받은 데이터 parsing
       const newBanpickInfo = parseBanpickData(rawBanpickInfo);
       if (newBanpickInfo) {
@@ -90,7 +89,7 @@ function TeamBan() {
     });
 
     // 다른 client에서 챔피언 select하는 정보 받아오기
-    socket.on("selectBroad", (selectData) => {
+    sock.on("selectBroad", (selectData) => {
       console.log("selectBroad 수신!!", selectData);
       banpickInfoDispatch({ type: "select", select: selectData });
     });
