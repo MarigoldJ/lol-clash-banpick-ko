@@ -1,6 +1,7 @@
 import { TextField } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
+import ChampListContainer from "./ChampListContainer";
 import PositionIcon from "./PositionIcon";
 
 function SelectUI() {
@@ -28,7 +29,9 @@ function SelectUI() {
           />
         </div>
       </div>
-      <div className="ui-champlist"></div>
+      <div className="ui-champlist">
+        <ChampListContainer />
+      </div>
       <div className="ui-button"></div>
     </Container>
   );
@@ -50,6 +53,10 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
 
+    width: 100%;
+  }
+  div.ui-champlist {
+    margin-top: 30px;
     width: 100%;
   }
 `;
