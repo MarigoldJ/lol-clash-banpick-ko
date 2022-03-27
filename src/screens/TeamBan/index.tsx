@@ -101,10 +101,21 @@ function TeamBan() {
     fakeBanpickInfo
   );
 
+  // champList에서 선택된 Champ의 id(영문이름) 관리
+  const [selectedChampId, setSelectedChamp] = useState<string>("");
+  const selectChamp = (champId: string) => {
+    setSelectedChamp(champId);
+    sockDispatch({
+      type: "select",
+      payload: { phase: banpickInfo.phase, champion: champId },
+    });
+  };
+
   return (
     <GameContext.Provider
       value={{
         banpickData: { banpickInfo, banpickInfoDispatch },
+        selectData: { selectChamp, selectedChampId },
         champList,
         sockDispatch,
       }}

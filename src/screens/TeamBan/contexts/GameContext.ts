@@ -9,6 +9,10 @@ type GameContextProps = {
     banpickInfo: ClientBanpickData;
     banpickInfoDispatch: Dispatch<banpickInfoAction>;
   };
+  selectData: {
+    selectedChampId: string;
+    selectChamp: (champ: string) => void;
+  };
 
   champList: Array<ChampData>;
 
@@ -19,6 +23,10 @@ const GameContext = createContext<GameContextProps>({
   banpickData: {
     banpickInfo: fakeBanpickInfo,
     banpickInfoDispatch: (value: banpickInfoAction) => {},
+  },
+  selectData: {
+    selectedChampId: "",
+    selectChamp: (champ: string) => {},
   },
   champList: [],
   sockDispatch: (value: socketAction) => {},
