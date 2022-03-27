@@ -1,14 +1,23 @@
 import { ChampData } from ".";
 
 type IProps = {
-  size: "big" | "small";
-  champ: ChampData;
+  type: "splash" | "loading" | "square";
+  champ: ChampData | undefined;
 };
 
-export function getLOLImgUrl({ size, champ }: IProps) {
-  if (size === "big") {
-    return `http://ddragon.leagueoflegends.com/cdn/${champ.version}/img/champion/${champ.id}.png`;
-  } else {
-    return `http://ddragon.leagueoflegends.com/cdn/${champ.version}/img/champion/${champ.id}_0.png`;
+export function getLOLImgUrl({ type, champ }: IProps) {
+  if (champ !== undefined) {
+    switch (type) {
+      case "splash":
+        return `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champ.id}_0.jpg`;
+      case "loading":
+        return `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.id}_0.jpg`;
+      default:
+        // square
+        return `http://ddragon.leagueoflegends.com/cdn/${champ.version}/img/champion/${champ.id}.png`;
+    }
   }
+
+  // champ === undefined
+  return "";
 }
