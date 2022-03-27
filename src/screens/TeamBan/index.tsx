@@ -4,21 +4,24 @@ import styled from "styled-components";
 import PickBanHeader from "./components/PickBanHeader";
 import PickBanLayout from "./components/PickBanLayout";
 import SelectUI from "./components/SelectUI";
+import GameContext from "./contexts/GameContext";
 
 function TeamBan() {
   // TODO: 서버에서 받아온 BanpickInfo로 대체할 것
   const banpickInfo: ClientBanpickData = fakeBanpickInfo;
 
   return (
-    <Container>
-      <PickBanHeader
-        blueName={banpickInfo.blueName}
-        redName={banpickInfo.redName}
-      />
-      <PickBanLayout>
-        <SelectUI />
-      </PickBanLayout>
-    </Container>
+    <GameContext.Provider value={{ banpickInfo }}>
+      <Container>
+        <PickBanHeader
+          blueName={banpickInfo.blueName}
+          redName={banpickInfo.redName}
+        />
+        <PickBanLayout>
+          <SelectUI />
+        </PickBanLayout>
+      </Container>
+    </GameContext.Provider>
   );
 }
 
