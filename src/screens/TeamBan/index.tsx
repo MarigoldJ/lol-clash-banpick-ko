@@ -1,12 +1,18 @@
 import { fakeBanpickInfo } from "@utils/general";
+import getServerUrl from "@utils/server";
 import { ChampData } from "@utils/type";
 import { useEffect, useReducer, useState } from "react";
+import { io } from "socket.io-client";
 import styled from "styled-components";
 import PickBanHeader from "./components/PickBanHeader";
 import PickBanLayout from "./components/PickBanLayout";
 import SelectUI from "./components/SelectUI";
 import GameContext from "./contexts/GameContext";
 import { banpickInfoReducer } from "./reducers/banpickInfoReducer";
+import { socketReducer } from "./reducers/socketReducer";
+
+// 서버와 실시간 통신을 위한 socket 연결
+const socket = io(getServerUrl("base"));
 
 function TeamBan() {
   // 게임 기본 데이터(버전, 챔피언 리스트) 불러오기
@@ -54,6 +60,8 @@ function TeamBan() {
       };
     }
   }, [gameVersion]);
+
+  const [sock, sockDispatch] = useReducer(socketReducer, socket);
 
   // 밴픽 현황 정보
   const [banpickInfo, banpickInfoDispatch] = useReducer(
