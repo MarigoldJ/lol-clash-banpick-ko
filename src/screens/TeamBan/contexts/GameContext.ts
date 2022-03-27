@@ -1,14 +1,22 @@
 import { fakeBanpickInfo } from "@utils/general";
 import { ChampData, ClientBanpickData } from "@utils/type";
-import { createContext } from "react";
+import { createContext, Dispatch } from "react";
+import { banpickInfoAction } from "../reducers/banpickInfoReducer";
 
 type GameContextProps = {
-  banpickInfo: ClientBanpickData;
+  banpickData: {
+    banpickInfo: ClientBanpickData;
+    banpickInfoDispatch: Dispatch<banpickInfoAction>;
+  };
+
   champList: Array<ChampData>;
 };
 
 const GameContext = createContext<GameContextProps>({
-  banpickInfo: fakeBanpickInfo,
+  banpickData: {
+    banpickInfo: fakeBanpickInfo,
+    banpickInfoDispatch: (value: banpickInfoAction) => {},
+  },
   champList: [],
 });
 
