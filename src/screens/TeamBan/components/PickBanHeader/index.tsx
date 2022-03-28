@@ -1,13 +1,16 @@
 import TeamSide from "@components/TeamSide";
+import GameContext from "@screens/TeamBan/contexts/GameContext";
+import { useContext } from "react";
 import styled from "styled-components";
 import Timer from "./Timer";
 
-type IProps = {
-  blueName: string;
-  redName: string;
-};
+function PickBanHeader() {
+  const {
+    banpickData: {
+      banpickInfo: { blueName, redName },
+    },
+  } = useContext(GameContext);
 
-function PickBanHeader({ blueName, redName }: IProps) {
   return (
     <Container>
       <TeamSide side="blue">{blueName}</TeamSide>

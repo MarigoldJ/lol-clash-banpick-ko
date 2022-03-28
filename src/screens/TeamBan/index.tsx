@@ -121,10 +121,7 @@ function TeamBan() {
       }}
     >
       <Container>
-        <PickBanHeader
-          blueName={banpickInfo.blueName}
-          redName={banpickInfo.redName}
-        />
+        <PickBanHeader />
         <PickBanLayout>
           <SelectUI />
         </PickBanLayout>
