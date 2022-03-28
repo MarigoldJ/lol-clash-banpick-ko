@@ -14,7 +14,7 @@ function PickBanHeader() {
   return (
     <Container>
       <TeamSide side="blue">{blueName}</TeamSide>
-      <Timer startTime={26} />
+      <Timer />
       <TeamSide side="red">{redName}</TeamSide>
     </Container>
   );
