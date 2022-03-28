@@ -6,9 +6,14 @@ export type banpickInfoAction = {
   select?: { phase: number; champion: string };
 };
 
-export const banpickInfoReducer = (
+export type IBanpickInfoReducer = (
   banpickInfo: ClientBanpickData,
   action: banpickInfoAction
+) => ClientBanpickData;
+
+export const banpickInfoReducer: IBanpickInfoReducer = (
+  banpickInfo,
+  action
 ) => {
   switch (action.type) {
     case "update":
