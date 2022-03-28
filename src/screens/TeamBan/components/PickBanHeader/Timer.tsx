@@ -1,6 +1,6 @@
 import GameContext from "@screens/TeamBan/contexts/GameContext";
 import fonts from "@styles/fonts";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 function Timer() {
