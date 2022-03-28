@@ -22,7 +22,7 @@ function SelectBtn() {
   };
 
   return (
-    <SButton onClick={clickBtn} disabled={false}>
+    <SButton onClick={clickBtn} disabled={!selectedChampId}>
       선택 완료
     </SButton>
   );

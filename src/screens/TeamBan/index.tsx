@@ -85,6 +85,7 @@ function TeamBan() {
       if (newBanpickInfo) {
         console.log("서버에서 밴픽정보 불러오기 완료!", newBanpickInfo.phase);
         banpickInfoDispatch({ type: "update", newBanpickInfo });
+        setSelectedChamp("");
       }
     });
 
