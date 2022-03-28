@@ -93,7 +93,7 @@ function TeamBan() {
       console.log("selectBroad 수신!!", selectData);
       banpickInfoDispatch({ type: "select", select: selectData });
     });
-  }, []);
+  }, [sock]);
 
   // 밴픽 현황 정보
   const [banpickInfo, banpickInfoDispatch] = useReducer(
