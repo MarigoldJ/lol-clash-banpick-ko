@@ -1,0 +1,108 @@
+import { TextField } from "@mui/material";
+import GameContext from "@screens/TeamBan/contexts/GameContext";
+import { ChangeEvent, useContext, useState } from "react";
+import styled from "styled-components";
+import ChampListContainer from "./ChampListContainer";
+import PositionIcon from "./PositionIcon";
+import ReadyBtn from "./ReadyBtn";
+import SelectBtn from "./SelectBtn";
+
+function SelectUI() {
+  const [searchName, setSearchName] = useState<string>("");
+  const onChangeSearchBox = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchName(event.target.value);
+  };
+
+  // banpickInfo에서 ready 정보 가져오기
+  const {
+    banpickData: {
+      banpickInfo: { isBlueReady, isRedReady },
+    },
+  } = useContext(GameContext);
+
+  return (
+    <Container>
+      <div className="ui-navigation">
+        <div className="ui-navigation-pos">
+          <PositionIcon position="TOP" />
+          <PositionIcon position="JUNGLE" />
+          <PositionIcon position="MIDDLE" />
+          <PositionIcon position="ADC" />
+          <PositionIcon position="SUPPORT" />
+        </div>
+        <div className="ui-navigation-search">
+          <ChampSearchBox
+            id="champion-search-box"
+            label="챔피언 명"
+            value={searchName}
+            onChange={onChangeSearchBox}
+          />
+        </div>
+      </div>
+      <div className="ui-champlist">
+        <ChampListContainer />
+      </div>
+      <div className="ui-button">
+        {isBlueReady && isRedReady ? <SelectBtn /> : <ReadyBtn />}
+      </div>
+    </Container>
+  );
+}
+
+export default SelectUI;
+
+// Style
+const Container = styled.div`
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  div.ui-navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+  }
+  div.ui-champlist {
+    margin-top: 30px;
+    width: 100%;
+  }
+  div.ui-button {
+    margin-top: 30px;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+  }
+`;
+const ChampSearchBox = styled(TextField)`
+  & label.Mui-focused {
+    color: white;
+  }
+  & label {
+    color: gray;
+  }
+
+  & .MuiInput-underline:after {
+    border-bottom-color: white;
+  }
+  & .MuiOutlinedInput-root {
+    & fieldset {
+      border-color: gray;
+    }
+    &:hover fieldset {
+      border-color: white;
+    }
+    &.Mui-focused fieldset {
+      border-color: white;
+    }
+
+    & input {
+      color: white;
+    }
+  }
+`;
