@@ -1,18 +1,13 @@
-import { TextField } from "@mui/material";
 import GameContext from "@screens/TeamBan/contexts/GameContext";
-import { ChangeEvent, useContext, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import ChampListContainer from "./ChampListContainer";
+import ChampSearchBox from "./ChampSearchBox";
 import PositionIcon from "./PositionIcon";
 import ReadyBtn from "./ReadyBtn";
 import SelectBtn from "./SelectBtn";
 
 function SelectUI() {
-  const [searchName, setSearchName] = useState<string>("");
-  const onChangeSearchBox = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchName(event.target.value);
-  };
-
   // banpickInfo에서 ready 정보 가져오기
   const {
     banpickData: {
@@ -31,12 +26,7 @@ function SelectUI() {
           <PositionIcon position="SUPPORT" />
         </div>
         <div className="ui-navigation-search">
-          <ChampSearchBox
-            id="champion-search-box"
-            label="챔피언 명"
-            value={searchName}
-            onChange={onChangeSearchBox}
-          />
+          <ChampSearchBox />
         </div>
       </div>
       <div className="ui-champlist">
@@ -77,32 +67,5 @@ const Container = styled.div`
 
     display: flex;
     justify-content: center;
-  }
-`;
-const ChampSearchBox = styled(TextField)`
-  & label.Mui-focused {
-    color: white;
-  }
-  & label {
-    color: gray;
-  }
-
-  & .MuiInput-underline:after {
-    border-bottom-color: white;
-  }
-  & .MuiOutlinedInput-root {
-    & fieldset {
-      border-color: gray;
-    }
-    &:hover fieldset {
-      border-color: white;
-    }
-    &.Mui-focused fieldset {
-      border-color: white;
-    }
-
-    & input {
-      color: white;
-    }
   }
 `;
