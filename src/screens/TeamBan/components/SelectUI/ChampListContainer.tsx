@@ -6,11 +6,21 @@ import styled from "styled-components";
 import ChampCell from "./ChampCell";
 
 function ChampListContainer() {
-  const { champList } = useContext(GameContext);
+  const {
+    banpickData: { banpickInfo, banpickInfoDispatch },
+    selectData: { selectChamp },
+    champList,
+  } = useContext(GameContext);
 
   const clickChamp = (champId: string | undefined) => {
     // 선택한 챔피언 밴픽 window에 띄우기
+    selectChamp(champId);
+
     // banpickInfo 수정하기
+    banpickInfoDispatch({
+      type: "select",
+      select: { phase: banpickInfo.phase, champion: champId },
+    });
   };
 
   return (
@@ -19,7 +29,11 @@ function ChampListContainer() {
         <ListContainer cols={6}>
           {champList.map((champ: ChampData) => (
             <ImageListItem key={`champ_${champ.id}`}>
-              <ChampCell champ={champ} clickable={true} onClick={clickChamp} />
+              <ChampCell
+                champ={champ}
+                clickable={!Object.values(banpickInfo).includes(champ.id)}
+                onClick={clickChamp}
+              />
             </ImageListItem>
           ))}
         </ListContainer>

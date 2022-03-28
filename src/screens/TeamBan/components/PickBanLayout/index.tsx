@@ -11,7 +11,10 @@ type IProps = {
 
 function PickBanLayout({ children }: IProps) {
   // gameContext 가져오기
-  const { banpickInfo, champList } = useContext(GameContext);
+  const {
+    banpickData: { banpickInfo },
+    champList,
+  } = useContext(GameContext);
 
   // function: 해당 phase의 window에 해당 champId의 이미지 url 불러오기
   const getImgUrl = (phase: number, champId: string) => {

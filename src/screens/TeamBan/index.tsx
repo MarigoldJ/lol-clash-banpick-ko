@@ -1,14 +1,26 @@
-import { fakeBanpickInfo } from "@utils/general";
-import { ChampData, ClientBanpickData } from "@utils/type";
-import { useEffect, useState } from "react";
+import {
+  fakeBanpickInfo,
+  getParamFromQueryStr,
+  parseBanpickData,
+} from "@utils/general";
+import getServerUrl from "@utils/server";
+import { ChampData } from "@utils/type";
+import { useEffect, useReducer, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { io } from "socket.io-client";
 import styled from "styled-components";
 import PickBanHeader from "./components/PickBanHeader";
 import PickBanLayout from "./components/PickBanLayout";
 import SelectUI from "./components/SelectUI";
 import GameContext from "./contexts/GameContext";
+import { banpickInfoReducer } from "./reducers/banpickInfoReducer";
+import { socketReducer } from "./reducers/socketReducer";
+
+// 서버와 실시간 통신을 위한 socket 연결
+const socket = io(getServerUrl("base"));
 
 function TeamBan() {
-  //   게임 기본 데이터(버전, 챔피언 리스트) 불러오기
+  // 게임 기본 데이터(버전, 챔피언 리스트) 불러오기
   const [gameVersion, setGameVersion] = useState("");
   const [champList, setChampList] = useState<Array<ChampData>>([]);
   useEffect(() => {
@@ -54,16 +66,63 @@ function TeamBan() {
     }
   }, [gameVersion]);
 
-  // TODO: 서버에서 받아온 BanpickInfo로 대체할 것
-  const banpickInfo: ClientBanpickData = fakeBanpickInfo;
+  // 서버와 연결
+  const [sock, sockDispatch] = useReducer(socketReducer, socket);
+
+  // 서버와 통신 : gameCode를 이용해서 banpickInfo 불러오기 (1회)
+  const { search } = useLocation();
+  const gameCode = getParamFromQueryStr(search, "game");
+  useEffect(() => {
+    sockDispatch({ type: "gamecode", payload: gameCode });
+  }, [gameCode]);
+
+  // 서버와 통신 : 서버에서 오는 메시지 기다리기
+  useEffect(() => {
+    // banpickInfo 받아오기
+    sock.on("banpickPhase", (rawBanpickInfo) => {
+      // 받은 데이터 parsing
+      const newBanpickInfo = parseBanpickData(rawBanpickInfo);
+      if (newBanpickInfo) {
+        console.log("서버에서 밴픽정보 불러오기 완료!", newBanpickInfo.phase);
+        banpickInfoDispatch({ type: "update", newBanpickInfo });
+        setSelectedChamp("");
+      }
+    });
+
+    // 다른 client에서 챔피언 select하는 정보 받아오기
+    sock.on("selectBroad", (selectData) => {
+      console.log("selectBroad 수신!!", selectData);
+      banpickInfoDispatch({ type: "select", select: selectData });
+    });
+  }, [sock]);
+
+  // 밴픽 현황 정보
+  const [banpickInfo, banpickInfoDispatch] = useReducer(
+    banpickInfoReducer,
+    fakeBanpickInfo
+  );
+
+  // champList에서 선택된 Champ의 id(영문이름) 관리
+  const [selectedChampId, setSelectedChamp] = useState<string>("");
+  const selectChamp = (champId: string) => {
+    setSelectedChamp(champId);
+    sockDispatch({
+      type: "select",
+      payload: { phase: banpickInfo.phase, champion: champId },
+    });
+  };
 
   return (
-    <GameContext.Provider value={{ banpickInfo, champList }}>
+    <GameContext.Provider
+      value={{
+        banpickData: { banpickInfo, banpickInfoDispatch },
+        selectData: { selectChamp, selectedChampId },
+        champList,
+        sockDispatch,
+      }}
+    >
       <Container>
-        <PickBanHeader
-          blueName={banpickInfo.blueName}
-          redName={banpickInfo.redName}
-        />
+        <PickBanHeader />
         <PickBanLayout>
           <SelectUI />
         </PickBanLayout>
