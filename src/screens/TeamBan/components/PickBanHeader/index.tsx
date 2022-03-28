@@ -7,14 +7,14 @@ import Timer from "./Timer";
 function PickBanHeader() {
   const {
     banpickData: {
-      banpickInfo: { blueName, redName },
+      banpickInfo: { blueName, redName, isBlueReady, isRedReady },
     },
   } = useContext(GameContext);
 
   return (
     <Container>
       <TeamSide side="blue">{blueName}</TeamSide>
-      <Timer />
+      {isBlueReady && isRedReady ? <Timer /> : null}
       <TeamSide side="red">{redName}</TeamSide>
     </Container>
   );
