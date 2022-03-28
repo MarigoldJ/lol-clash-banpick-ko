@@ -1,8 +1,10 @@
 import { TextField } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import GameContext from "@screens/TeamBan/contexts/GameContext";
+import { ChangeEvent, useContext, useState } from "react";
 import styled from "styled-components";
 import ChampListContainer from "./ChampListContainer";
 import PositionIcon from "./PositionIcon";
+import ReadyBtn from "./ReadyBtn";
 import SelectBtn from "./SelectBtn";
 
 function SelectUI() {
@@ -10,6 +12,13 @@ function SelectUI() {
   const onChangeSearchBox = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchName(event.target.value);
   };
+
+  // banpickInfo에서 ready 정보 가져오기
+  const {
+    banpickData: {
+      banpickInfo: { isBlueReady, isRedReady },
+    },
+  } = useContext(GameContext);
 
   return (
     <Container>
@@ -34,7 +43,7 @@ function SelectUI() {
         <ChampListContainer />
       </div>
       <div className="ui-button">
-        <SelectBtn />
+        {isBlueReady && isRedReady ? <SelectBtn /> : <ReadyBtn />}
       </div>
     </Container>
   );
