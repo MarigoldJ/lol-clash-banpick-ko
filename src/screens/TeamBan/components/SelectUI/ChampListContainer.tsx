@@ -1,5 +1,6 @@
 import { ImageList, ImageListItem } from "@mui/material";
 import GameContext from "@screens/TeamBan/contexts/GameContext";
+import { champPos } from "@utils/champPos";
 import { ChampData } from "@utils/type";
 import { useContext } from "react";
 import styled from "styled-components";
@@ -10,6 +11,7 @@ function ChampListContainer() {
     banpickData: { banpickInfo, banpickInfoDispatch },
     selectData: { selectChamp },
     searchData: { searchName },
+    positionData: { position },
     champList,
   } = useContext(GameContext);
 
@@ -24,21 +26,35 @@ function ChampListContainer() {
     });
   };
 
+  // 아래에서 쓰이는 함수들
+  const isUsedInPosition = (champ: ChampData) => {
+    if (position !== "") {
+      const posChampList = champPos(position);
+      return posChampList.includes(champ.name);
+    } else {
+      return true;
+    }
+  };
+  const isStartWithSearchName = (champ: ChampData) =>
+    champ.name.startsWith(searchName);
+  const retChampCell = (champ: ChampData) => (
+    <ImageListItem key={`champ_${champ.id}`}>
+      <ChampCell
+        champ={champ}
+        clickable={!Object.values(banpickInfo).includes(champ.id)}
+        onClick={clickChamp}
+      />
+    </ImageListItem>
+  );
+
   return (
     <Container>
       <div className="champlist-content">
         <ListContainer cols={6}>
           {champList
-            .filter((champ: ChampData) => champ.name.startsWith(searchName))
-            .map((champ: ChampData) => (
-              <ImageListItem key={`champ_${champ.id}`}>
-                <ChampCell
-                  champ={champ}
-                  clickable={!Object.values(banpickInfo).includes(champ.id)}
-                  onClick={clickChamp}
-                />
-              </ImageListItem>
-            ))}
+            .filter(isUsedInPosition)
+            .filter(isStartWithSearchName)
+            .map(retChampCell)}
         </ListContainer>
       </div>
     </Container>
