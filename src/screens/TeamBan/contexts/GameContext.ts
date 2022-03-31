@@ -13,9 +13,12 @@ type GameContextProps = {
     selectedChampId: string;
     selectChamp: (champ: string) => void;
   };
+  searchData: {
+    searchName: string;
+    changeSearchName: (newSearchName: string) => void;
+  };
 
   champList: Array<ChampData>;
-
   sockDispatch: Dispatch<socketAction>;
 };
 
@@ -27,6 +30,10 @@ const GameContext = createContext<GameContextProps>({
   selectData: {
     selectedChampId: "",
     selectChamp: (champ: string) => {},
+  },
+  searchData: {
+    searchName: "",
+    changeSearchName: (newSearchName: string) => {},
   },
   champList: [],
   sockDispatch: (value: socketAction) => {},

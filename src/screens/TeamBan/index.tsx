@@ -112,11 +112,18 @@ function TeamBan() {
     });
   };
 
+  // SearchBox에서 검색된 내용 관리
+  const [searchName, setSearchName] = useState<string>("");
+  const changeSearchName = (newSearchName: string) => {
+    setSearchName(newSearchName);
+  };
+
   return (
     <GameContext.Provider
       value={{
         banpickData: { banpickInfo, banpickInfoDispatch },
         selectData: { selectChamp, selectedChampId },
+        searchData: { searchName, changeSearchName },
         champList,
         sockDispatch,
       }}

@@ -1,11 +1,14 @@
 import { TextField } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import GameContext from "@screens/TeamBan/contexts/GameContext";
+import { ChangeEvent, useContext } from "react";
 import styled from "styled-components";
 
 function ChampSearchBox() {
-  const [searchName, setSearchName] = useState<string>("");
+  const {
+    searchData: { searchName, changeSearchName },
+  } = useContext(GameContext);
   const onChangeSearchBox = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchName(event.target.value);
+    changeSearchName(event.target.value);
   };
 
   return (
