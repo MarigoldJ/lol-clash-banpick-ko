@@ -9,6 +9,7 @@ function ChampListContainer() {
   const {
     banpickData: { banpickInfo, banpickInfoDispatch },
     selectData: { selectChamp },
+    searchData: { searchName },
     champList,
   } = useContext(GameContext);
 
@@ -27,15 +28,17 @@ function ChampListContainer() {
     <Container>
       <div className="champlist-content">
         <ListContainer cols={6}>
-          {champList.map((champ: ChampData) => (
-            <ImageListItem key={`champ_${champ.id}`}>
-              <ChampCell
-                champ={champ}
-                clickable={!Object.values(banpickInfo).includes(champ.id)}
-                onClick={clickChamp}
-              />
-            </ImageListItem>
-          ))}
+          {champList
+            .filter((champ: ChampData) => champ.name.startsWith(searchName))
+            .map((champ: ChampData) => (
+              <ImageListItem key={`champ_${champ.id}`}>
+                <ChampCell
+                  champ={champ}
+                  clickable={!Object.values(banpickInfo).includes(champ.id)}
+                  onClick={clickChamp}
+                />
+              </ImageListItem>
+            ))}
         </ListContainer>
       </div>
     </Container>
