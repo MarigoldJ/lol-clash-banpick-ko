@@ -4,7 +4,7 @@ import {
   parseBanpickData,
 } from "@utils/general";
 import getServerUrl from "@utils/server";
-import { ChampData } from "@utils/type";
+import { ChampData, Position } from "@utils/type";
 import { useEffect, useReducer, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { io } from "socket.io-client";
@@ -118,12 +118,23 @@ function TeamBan() {
     setSearchName(newSearchName);
   };
 
+  // 선택된 Position 아이콘 관리
+  const [position, setPosition] = useState<Position | "">("");
+  const changePosition = (newPosition: Position | "") => {
+    if (position === newPosition) {
+      setPosition("");
+    } else {
+      setPosition(newPosition);
+    }
+  };
+
   return (
     <GameContext.Provider
       value={{
         banpickData: { banpickInfo, banpickInfoDispatch },
         selectData: { selectChamp, selectedChampId },
         searchData: { searchName, changeSearchName },
+        positionData: { position, changePosition },
         champList,
         sockDispatch,
       }}

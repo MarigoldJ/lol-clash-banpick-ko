@@ -1,20 +1,44 @@
 import { Position } from "@utils/type";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { useContext } from "react";
+import GameContext from "@screens/TeamBan/contexts/GameContext";
 
 type IProps = {
-  position: Position;
+  pos: Position;
 };
 
-export default function PositionIcon({ position }: IProps) {
-  const imgUrl = `https://raw.githubusercontent.com/esports-bits/lol_images/master/role_lane_icons/${position}.png`;
+export default function PositionIcon({ pos }: IProps) {
+  const imgUrl = `https://raw.githubusercontent.com/esports-bits/lol_images/master/role_lane_icons/${pos}.png`;
 
-  return <StyledImg src={imgUrl} alt={position} />;
+  const {
+    positionData: { position, changePosition },
+  } = useContext(GameContext);
+  const clickPosition = () => {
+    changePosition(pos);
+  };
+
+  return (
+    <StyledImg
+      src={imgUrl}
+      alt={pos}
+      onClick={clickPosition}
+      isSelected={position === pos}
+    />
+  );
 }
 
 // Style
-const StyledImg = styled.img`
+const StyledImg = styled.img<{ isSelected: boolean }>`
   height: 50px;
-  opacity: 0.4;
+  ${(props) =>
+    props.isSelected
+      ? css`
+          opacity: 1;
+          border-bottom: 5px solid rgba(200, 170, 110, 0.7);
+        `
+      : css`
+          opacity: 0.4;
+        `}
 
   :hover {
     cursor: pointer;

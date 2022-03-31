@@ -19,11 +19,11 @@ function SelectUI() {
     <Container>
       <div className="ui-navigation">
         <div className="ui-navigation-pos">
-          <PositionIcon position="TOP" />
-          <PositionIcon position="JUNGLE" />
-          <PositionIcon position="MIDDLE" />
-          <PositionIcon position="ADC" />
-          <PositionIcon position="SUPPORT" />
+          <PositionIcon pos="TOP" />
+          <PositionIcon pos="JUNGLE" />
+          <PositionIcon pos="MIDDLE" />
+          <PositionIcon pos="ADC" />
+          <PositionIcon pos="SUPPORT" />
         </div>
         <div className="ui-navigation-search">
           <ChampSearchBox />
