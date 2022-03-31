@@ -1,3 +1,5 @@
+import { Position } from "./type";
+
 const TOP = [
   "가렌",
   "갱플랭크",
@@ -187,10 +189,17 @@ const SUPPORT = [
   "판테온",
 ];
 
-export const champPos = {
-  TOP: TOP,
-  JUNGLE: JUNGLE,
-  MIDDLE: MIDDLE,
-  ADC: ADC,
-  SUPPORT: SUPPORT,
+export const champPos = (position: Position) => {
+  switch (position) {
+    case "TOP":
+      return TOP;
+    case "JUNGLE":
+      return JUNGLE;
+    case "MIDDLE":
+      return MIDDLE;
+    case "ADC":
+      return ADC;
+    case "SUPPORT":
+      return SUPPORT;
+  }
 };
