@@ -1,8 +1,10 @@
 import { ImageList, ImageListItem } from "@mui/material";
 import GameContext from "@screens/TeamBan/contexts/GameContext";
 import { champPos } from "@utils/champPos";
+import { getParamFromQueryStr } from "@utils/general";
 import { ChampData } from "@utils/type";
 import { useContext } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import ChampCell from "./ChampCell";
 
@@ -15,15 +17,27 @@ function ChampListContainer() {
     champList,
   } = useContext(GameContext);
 
-  const clickChamp = (champId: string | undefined) => {
-    // 선택한 챔피언 밴픽 window에 띄우기
-    selectChamp(champId);
+  // url에서 어느 팀인지 따오기
+  const { search } = useLocation();
+  const teamSide = getParamFromQueryStr(search, "team");
 
-    // banpickInfo 수정하기
-    banpickInfoDispatch({
-      type: "select",
-      select: { phase: banpickInfo.phase, champion: champId },
-    });
+  // 현재 phase가 자신의 차례인지 여부
+  const isBlueTurn = [1, 3, 5, 7, 10, 11, 14, 16, 18, 19].includes(
+    banpickInfo.phase
+  );
+  const isMyTurn = isBlueTurn ? teamSide === "blue" : teamSide === "red";
+
+  const clickChamp = (champId: string | undefined) => {
+    if (isMyTurn) {
+      // 선택한 챔피언 밴픽 window에 띄우기
+      selectChamp(champId);
+
+      // banpickInfo 수정하기
+      banpickInfoDispatch({
+        type: "select",
+        select: { phase: banpickInfo.phase, champion: champId },
+      });
+    }
   };
 
   // 아래에서 쓰이는 함수들
