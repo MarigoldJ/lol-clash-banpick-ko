@@ -1,5 +1,7 @@
 export type TeamColor = "red" | "blue";
 
+export type Position = "TOP" | "JUNGLE" | "MIDDLE" | "ADC" | "SUPPORT";
+
 export type ChampData = {
   id: string | undefined;
   key: string | undefined;

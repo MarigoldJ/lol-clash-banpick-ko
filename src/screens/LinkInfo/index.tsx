@@ -3,7 +3,7 @@ import BasicLayout from "@components/BasicLayout";
 import TeamSide from "@components/TeamSide";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ErrorMsg, LinkCopyBtnContainer } from "./components";
+import { BackToHomeBtn, ErrorMsg, LinkCopyBtnContainer } from "./components";
 
 type IBanpickInfo = {
   teamName: {
@@ -62,6 +62,8 @@ function LinkInfo() {
       <LinkCopyBtnContainer link={banpickInfo.link.obs}>
         <TeamSide side="none">{"관전자"}</TeamSide>
       </LinkCopyBtnContainer>
+
+      <BackToHomeBtn />
     </BasicLayout>
   );
 }

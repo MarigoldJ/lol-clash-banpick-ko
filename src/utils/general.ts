@@ -71,3 +71,19 @@ export const fakeBanpickInfo: ClientBanpickData = {
   19: "",
   20: "",
 };
+
+export function isMyTurn(phase: number, teamSide: string) {
+  // 현재 phase가 본인 팀 차례이면 true, 아니면 false를 반환
+
+  // 각 팀의 phase
+  const bluePhase = [1, 3, 5, 7, 10, 11, 14, 16, 18, 19];
+  const redPhase = [2, 4, 6, 8, 9, 12, 13, 15, 17, 20];
+
+  if (teamSide === "blue") {
+    return bluePhase.includes(phase);
+  } else if (teamSide === "red") {
+    return redPhase.includes(phase);
+  } else {
+    return false;
+  }
+}

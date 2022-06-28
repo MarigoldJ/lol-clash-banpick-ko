@@ -1,7 +1,10 @@
 import { ImageList, ImageListItem } from "@mui/material";
 import GameContext from "@screens/TeamBan/contexts/GameContext";
+import { champPos } from "@utils/champPos";
+import { getParamFromQueryStr, isMyTurn } from "@utils/general";
 import { ChampData } from "@utils/type";
 import { useContext } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import ChampCell from "./ChampCell";
 
@@ -9,33 +12,58 @@ function ChampListContainer() {
   const {
     banpickData: { banpickInfo, banpickInfoDispatch },
     selectData: { selectChamp },
+    searchData: { searchName },
+    positionData: { position },
     champList,
   } = useContext(GameContext);
 
-  const clickChamp = (champId: string | undefined) => {
-    // 선택한 챔피언 밴픽 window에 띄우기
-    selectChamp(champId);
+  // url에서 어느 팀인지 따오기
+  const { search } = useLocation();
+  const teamSide = getParamFromQueryStr(search, "team");
 
-    // banpickInfo 수정하기
-    banpickInfoDispatch({
-      type: "select",
-      select: { phase: banpickInfo.phase, champion: champId },
-    });
+  const clickChamp = (champId: string | undefined) => {
+    // 본인 차례에만 챔피언 선택 시 서버에 정보 보내기
+    if (isMyTurn(banpickInfo.phase, teamSide)) {
+      // 선택한 챔피언 밴픽 window에 띄우기
+      selectChamp(champId);
+
+      // banpickInfo 수정하기
+      banpickInfoDispatch({
+        type: "select",
+        select: { phase: banpickInfo.phase, champion: champId },
+      });
+    }
   };
+
+  // 아래에서 쓰이는 함수들
+  const isUsedInPosition = (champ: ChampData) => {
+    if (position !== "") {
+      const posChampList = champPos(position);
+      return posChampList.includes(champ.name);
+    } else {
+      return true;
+    }
+  };
+  const isStartWithSearchName = (champ: ChampData) =>
+    champ.name.startsWith(searchName);
+  const retChampCell = (champ: ChampData) => (
+    <ImageListItem key={`champ_${champ.id}`}>
+      <ChampCell
+        champ={champ}
+        clickable={!Object.values(banpickInfo).includes(champ.id)}
+        onClick={clickChamp}
+      />
+    </ImageListItem>
+  );
 
   return (
     <Container>
       <div className="champlist-content">
         <ListContainer cols={6}>
-          {champList.map((champ: ChampData) => (
-            <ImageListItem key={`champ_${champ.id}`}>
-              <ChampCell
-                champ={champ}
-                clickable={!Object.values(banpickInfo).includes(champ.id)}
-                onClick={clickChamp}
-              />
-            </ImageListItem>
-          ))}
+          {champList
+            .filter(isUsedInPosition)
+            .filter(isStartWithSearchName)
+            .map(retChampCell)}
         </ListContainer>
       </div>
     </Container>
