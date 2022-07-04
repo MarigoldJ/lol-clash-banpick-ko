@@ -2,8 +2,8 @@ type IProps = "base" | "create-link";
 
 const SERVER_URL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:38080"
-    : "https://lol-clash-banpick-ko-server.herokuapp.com";
+    ? process.env.REACT_APP_SERVER_URI_DEV
+    : process.env.REACT_APP_SERVER_URI_PROD;
 
 export default function getServerUrl(option: IProps) {
   switch (option) {
