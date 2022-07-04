@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Dependence
-        run: npm install
+        run: npm install --save --legacy-peer-deps
 
       - name: Build app
         run: npm run build
