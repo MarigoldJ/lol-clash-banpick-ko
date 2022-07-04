@@ -18,7 +18,8 @@ jobs:
       - name: Build app
         run: npm run build
         env:
-          REACT_APP_SERVER_URL: ${{ secrets.SERVER_URL }}
+          REACT_APP_SERVER_URI_DEV: ${{secrets.REACT_APP_SERVER_URI_DEV}}
+          REACT_APP_SERVER_URI_PROD: ${{ secrets.REACT_APP_SERVER_URI_PROD }}
 
       - name: Deploy To s3
         env:
