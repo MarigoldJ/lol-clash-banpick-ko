@@ -1,46 +1,12 @@
-# Getting Started with Create React App
+# League of Legends Banpick Page for Korean (2022.09 Updated)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+리그오브레전드 밴픽사이트 한글판입니다. 아래 링크로 이용 가능합니다.
+https://www.lol-clash-banpick-ko.com
 
-## Available Scripts
+# Intro
 
-In the project directory, you can run:
+2021년 11월 경에 지인들과 롤 내전을 하다가, 밴픽 과정에서 번거로움을 느껴 밴픽을 수행할 수 있는 웹사이트를 찾아보게 되었습니다. 하지만 당시 기존에 존재하는 밴픽사이트들에서 챔피언명을 검색할 때 한국어를 사용할 수 없었고, 당시 Javascript를 처음 배워보고 있던 차에 만들어보게 되었습니다.
 
-### `npm start`
+# Repository Intro
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+본 코드는 밴픽사이트 웹페이지를 React로 구현한 코드입니다. 처음에는 Javascript 기반으로 구현했으며, 2022년 1월말에 Typescript 기반으로 재구성했습니다.
